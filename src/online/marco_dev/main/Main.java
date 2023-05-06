@@ -61,6 +61,7 @@ public class Main {
                 }
             });
         } else {
+            frame.setSize(600, 200);
             label = new JLabel("Unfortunately there is no MySQL Connection, check your credentials.");
             JButton button = new JButton("OK");
             button.setAction(new AbstractAction() {
@@ -79,7 +80,7 @@ public class Main {
 
     /**
      *
-     * Add the gained loan to the account
+     * Add the gained loan to the database
      *
      * @param newhours - The hours you have worked
      * @param newloan  - The loan per hour you have got

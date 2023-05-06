@@ -9,6 +9,7 @@ import java.util.Calendar;
  * to your MySQL-Database
  *
  */
+
 public class MySQL {
 
     /** The credentials to connect to your MySQL-Database */
@@ -66,7 +67,7 @@ public class MySQL {
         }
     }
 
-    double getBalance() {
+    public static double getBalance() {
         return balance;
     }
 
