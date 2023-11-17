@@ -1,9 +1,9 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="Loans">
+  <artifact type="jar" build-on-make="true" name="Loans:jar">
     <output-path>$USER_HOME$/Desktop</output-path>
     <root id="archive" name="Loans.jar">
       <element id="module-output" name="Loans" />
-      <element id="library" level="project" name="mysql-connector-j-8.0.33" />
+      <element id="library" level="project" name="mysql.connector.java" />
     </root>
   </artifact>
 </component>

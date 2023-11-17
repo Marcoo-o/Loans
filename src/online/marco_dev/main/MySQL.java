@@ -12,18 +12,19 @@ import java.util.Calendar;
 
 public class MySQL {
 
+    static Config cfg = new Config();
+
     /** The credentials to connect to your MySQL-Database */
-    static String hostname = "localhost",
-            database = "loan",
-            username = "root",
-            password = "";
+    static String hostname = cfg.getProperty("Database-Hostname"),
+            database = cfg.getProperty("Database-Name"),
+            username = cfg.getProperty("Database-User"),
+            password = cfg.getProperty("Database-Password");
 
     /** The connection which is going to establish (or not) */
     static Connection con = null;
 
     /** The current balance which is credited */
     public static double balance;
-
 
     /** Setter - Connect the Application with your database*/
     public static void connect() {
@@ -32,8 +33,7 @@ public class MySQL {
             System.out.println("The connection was successfully established.");
         } catch (SQLException ex) {
             System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
+            System.out.println("Please check your configuration details.");
         }
     }
 
@@ -41,8 +41,8 @@ public class MySQL {
      * @param loan - The loan you get per hour
      * @param hours - The hours you have worked and would like to credit */
     public static void add(double loan, double hours) {
-        String sql = "INSERT INTO `loan`(`Date`, `Loan`, `Hours`, `Balance`) VALUES (?,?,?,?)";
-        String sql2 = "SELECT `Balance` FROM `Loan` ORDER BY id DESC LIMIT 1 ";
+        String sql = "INSERT INTO `loans`(`Date`, `Loan`, `Hours`, `Balance`) VALUES (?,?,?,?)";
+        String sql2 = "SELECT `Balance` FROM `Loans` ORDER BY id DESC LIMIT 1";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -66,9 +66,4 @@ public class MySQL {
             throw new RuntimeException(e);
         }
     }
-
-    public static double getBalance() {
-        return balance;
-    }
-
 }

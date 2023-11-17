@@ -2,6 +2,9 @@ package online.marco_dev.main;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  *
@@ -15,8 +18,10 @@ import java.awt.event.ActionEvent;
 
 public class Main {
 
+    static Config cfg = new Config();
+
     /** The currency in which everything is calculated */
-    static String currency = "€";
+    static String currency = cfg.getProperty("Currency");
 
     /** The hours which you have worked */
     static double hours;
@@ -25,9 +30,19 @@ public class Main {
     static double loan;
 
     /** Setter - The default Method, it creates a Panel to calculate your loan which add it to your MySQL account */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        if(cfg.getProperty("Database-Hostname") == null) {
+            Properties prop = new Properties();
+            prop.setProperty("Database-Hostname", "localhost");
+            prop.setProperty("Database-Name", "loan");
+            prop.setProperty("Database-User", "YourUser");
+            prop.setProperty("Database-Password", "YourPassword");
+            prop.setProperty("Currency", "€ (Euro)");
+            prop.store(new FileOutputStream("./config/config.properties"), null);
+        }
+
         JFrame frame = new JFrame("Loan-Calculation");
-        frame.setSize(300, 200);
+        frame.setSize(300, 100);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         MySQL.connect();
@@ -42,9 +57,9 @@ public class Main {
                 textField.setText(text);
             });
             JLabel label1 = new JLabel("Hours you've worked:");
-            JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 12, 6);
+            JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 12, 8);
             JLabel label2 = new JLabel(String.valueOf(slider.getValue()));
-            slider.addChangeListener(e -> label2.setText("" + slider.getValue()));
+            slider.addChangeListener(e -> label2.setText(String.valueOf(slider.getValue())));
 
             JButton button = new JButton("OK");
 
